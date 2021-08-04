@@ -14,10 +14,11 @@ spring:
     username: root
     password:
 
-  mvc:
-    view:
-      prefix: /templates/
-      suffix: .mustache
+# 머스태치 의존성 등록 시 기본적으로 설정된다
+#  mvc:
+#    view:
+#      prefix: /templates/
+#      suffix: .mustache
 
   jpa:
     hibernate:
