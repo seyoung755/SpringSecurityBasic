@@ -18,6 +18,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     // 시큐리티 session <= Authentication <= UserDetails
     // 시큐리티 session (내부 Authentication (내부 UserDetails))
+    // 해당 함수가 종료될 때 @AuthenticationPrincipal 어노테이션이 만들어진다.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("username : "+ username);
