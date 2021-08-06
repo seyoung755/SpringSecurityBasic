@@ -4,6 +4,7 @@ import com.seyeong.security1.config.auth.PrincipalDetails;
 import com.seyeong.security1.model.User;
 import com.seyeong.security1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -17,7 +18,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
-    private final BCryptPasswordEncoder encoder;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+//    private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;
 
     // 구글로부터 받은 userRequest 데이터에 대한 후처리 함수
@@ -29,11 +33,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         System.out.println("userRequest : " + oAuth2User.getAttributes());
 
-        String provider = userRequest.getClientRegistration().getClientId();
+        String provider = userRequest.getClientRegistration().getRegistrationId();
         String providerId = oAuth2User.getAttribute("sub");
         String username = provider+"_"+providerId;
         String email = oAuth2User.getAttribute("email");
-        String password = encoder.encode("세영");
+        String password = bCryptPasswordEncoder.encode("세영");
         String role = "ROLE_USER";
 
         User userEntity = userRepository.findByUsername(username);

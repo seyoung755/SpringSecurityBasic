@@ -7,6 +7,7 @@ package com.seyeong.security1.config;
 
 import com.seyeong.security1.config.oauth.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -18,16 +19,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터체인에 등록
 @EnableGlobalMethodSecurity(securedEnabled = true) // Secured annotaion 활성화 -> 특정 사이트에 권한 설정가능
-@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PrincipalOauth2UserService principalOauth2UserService;
 
     // 해당 메서드의 리턴 오브젝트를 빈으로 등록해준다.
     @Bean
     public BCryptPasswordEncoder encodePwd() {
         return new BCryptPasswordEncoder();
     }
+
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
