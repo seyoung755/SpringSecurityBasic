@@ -1,10 +1,12 @@
 package com.seyeong.security1.controller;
 
+import com.seyeong.security1.config.auth.PrincipalDetails;
 import com.seyeong.security1.model.User;
 import com.seyeong.security1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,6 +67,12 @@ public class IndexController {
     @GetMapping("/data")
     public @ResponseBody String data() {
         return "데이터정보";
+    }
+
+    @GetMapping("/user")
+    public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        System.out.println("principalDetails : " + principalDetails.getUser());
+        return "user";
     }
 
 }
