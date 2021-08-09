@@ -1,10 +1,7 @@
 package com.seyeong.security1.config.oauth;
 
 import com.seyeong.security1.config.auth.PrincipalDetails;
-import com.seyeong.security1.config.oauth.provider.FacebookUserInfo;
-import com.seyeong.security1.config.oauth.provider.GoogleUserInfo;
-import com.seyeong.security1.config.oauth.provider.NaverUserInfo;
-import com.seyeong.security1.config.oauth.provider.OAuth2UserInfo;
+import com.seyeong.security1.config.oauth.provider.*;
 import com.seyeong.security1.model.User;
 import com.seyeong.security1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +45,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         }else if(userRequest.getClientRegistration().getRegistrationId().equals("naver")){
             System.out.println("네이버 로그인 요청");
             oAuth2UserInfo = new NaverUserInfo(oAuth2User.getAttributes());
+        }else if(userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
+            System.out.println("카카오 로그인 요청");
+            oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
         }else {
             System.out.println("지원하지 않는 클라이언트입니다.");
         }
